@@ -1,23 +1,22 @@
 package model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.sql.Timestamp;
 
 @Entity
-@Table (name = "posts", schema = "CRUDv4",catalog = "postgres")
+@Table (name = "posts", schema = "crud",catalog = "postgres")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Post {
+@ToString
+@EqualsAndHashCode
+public class Post  {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    private Integer id;
+    private Long post_id;
     private String post;
 
     private Timestamp created;
@@ -25,5 +24,17 @@ public class Post {
     private Timestamp updated;
 
     @Column(name = "poststatus")
+    @Enumerated(EnumType.STRING)
     private PostStatus postStatus;
+
+    public Post(String post, PostStatus postStatus) {
+        this.post = post;
+        this.postStatus = postStatus;
+    }
+
+    public Post(Long post_id, String post, PostStatus postStatus) {
+        this.post_id = post_id;
+        this.post = post;
+        this.postStatus = postStatus;
+    }
 }
