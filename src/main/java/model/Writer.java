@@ -23,4 +23,11 @@ public class Writer {
     private List<Post> post;
     @OneToOne
     private Region region;
+
+    public Writer(String firstName, String lastName, List<Post> post, Region region) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.post = post;
+        this.region = region;
+    }
 }
