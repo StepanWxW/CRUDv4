@@ -1,5 +1,6 @@
 package repository.implementation;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import model.Writer;
@@ -42,19 +43,23 @@ public class WriterRepositoryImpl implements WriterRepository {
 
     @Override
     public Writer update(Writer writer) {
-        Session session = sessionUtil.openTransactionSession();
+        try(Session session = sessionUtil.openTransactionSession()) {
         session.saveOrUpdate(writer);
         session.getTransaction().commit();
-        session.close();
+        } catch (EntityNotFoundException e) {
+        System.out.println("Writer whit id: " + writer.getWriter_id() + " is missing.");
+    }
         return writer;
     }
 
     @Override
     public void remove(Long id) {
-        Session session = sessionUtil.openTransactionSession();
+        try(Session session = sessionUtil.openTransactionSession()) {
         Writer writer = session.load(Writer.class, id);
         session.delete(writer);
         session.getTransaction().commit();
-        session.close();
+        } catch (EntityNotFoundException e) {
+            System.out.println("Writer whit id: " + id + " is missing.");
+        }
     }
 }

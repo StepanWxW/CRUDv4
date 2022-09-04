@@ -19,7 +19,7 @@ public class Writer {
     private Long writer_id;
     private String firstName;
     private String lastName;
-    @OneToMany
+    @ManyToMany
     private List<Post> post;
     @OneToOne
     private Region region;

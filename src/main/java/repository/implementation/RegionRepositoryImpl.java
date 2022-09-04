@@ -1,5 +1,6 @@
 package repository.implementation;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import model.Region;
@@ -42,19 +43,23 @@ public class RegionRepositoryImpl implements RegionRepository {
 
     @Override
     public Region update(Region region) {
-        Session session = sessionUtil.openTransactionSession();
-        session.saveOrUpdate(region);
-        session.getTransaction().commit();
-        session.close();
+        try(Session session = sessionUtil.openTransactionSession()) {
+            session.saveOrUpdate(region);
+            session.getTransaction().commit();
+        } catch (EntityNotFoundException e) {
+            System.out.println("Region whit id: " + region.getRegion_id() + " is missing.");
+        }
         return region;
     }
 
     @Override
     public void remove(Long id) {
-        Session session = sessionUtil.openTransactionSession();
-        Region region = session.load(Region.class, id);
-        session.delete(region);
-        session.getTransaction().commit();
-        session.close();
+        try(Session session = sessionUtil.openTransactionSession()) {
+            Region region = session.load(Region.class, id);
+            session.delete(region);
+            session.getTransaction().commit();
+        } catch (EntityNotFoundException e) {
+            System.out.println("Region whit id: " + id + " is missing.");
+        }
     }
 }

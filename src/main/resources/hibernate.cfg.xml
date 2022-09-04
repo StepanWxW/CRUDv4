@@ -17,6 +17,7 @@
         <mapping class="model.Post"/>
         <mapping class="model.Region"/>
         <mapping class="model.Writer"/>
+        <mapping class="model.PostStatus"/>
 
 
     </session-factory>

@@ -27,8 +27,26 @@
         <scope>provided</scope>
     </dependency>
 
-
+    <dependency>
+        <groupId>org.flywaydb</groupId>
+        <artifactId>flyway-core</artifactId>
+        <version>9.2.2</version>
+    </dependency>
 </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>9.2.2</version>
+                <configuration>
+                    <user>postgres</user>
+                    <password>12345</password>
+                    <url>jdbc:postgresql://localhost:5432/crud</url>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
     <properties>
         <maven.compiler.source>18</maven.compiler.source>
         <maven.compiler.target>18</maven.compiler.target>

@@ -1,5 +1,6 @@
 package repository.implementation;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import model.Post;
@@ -46,21 +47,25 @@ public class PostRepositoryImpl implements PostRepository {
     @Override
     public Post update(Post post) {
         Post post1 = getById(post.getPost_id());
-        Session session = sessionUtil.openTransactionSession();
+        try(Session session = sessionUtil.openTransactionSession()) {
         post.setCreated(post1.getCreated());
         post.setUpdated(new Timestamp(System.currentTimeMillis()));
         session.update(post);
         session.getTransaction().commit();
-        session.close();
+        } catch (EntityNotFoundException e) {
+            System.out.println("Post whit id: " + post.getPost_id() + " is missing.");
+        }
         return post;
     }
 
     @Override
     public void remove(Long id) {
-        Session session = sessionUtil.openTransactionSession();
+        try(Session session = sessionUtil.openTransactionSession()) {
         Post post = session.load(Post.class, id);
         session.delete(post);
         session.getTransaction().commit();
-        session.close();
+        } catch (EntityNotFoundException e) {
+            System.out.println("Post whit id: " + id + " is missing.");
+        }
     }
 }
