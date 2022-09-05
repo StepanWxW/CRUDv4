@@ -15,3 +15,13 @@ PostStatus(enum ACTIVE, DELETED)
 - Для конфигурирования Hibernate - аннотации
 - Инициализация БД должна быть реализована с помощью flyway
   Технологии: Java, PostgeSQL, Hibernate, Flyway, Maven
+
+### Настройка Flyway
+1. Скачать flyway https://flywaydb.org/
+2. Рапаковать flyway. Зайти в папку \flyway-9.2.2\conf. В файле flyway:
+* В строке " flyway.url= " url к вашей базе postgresSQL
+* В строке " flyway.user= " указать юзера
+* В строке " flyway.password= " указать пароль
+* Везде убрать значок " # "
+3. В командной строке перейти в папку с проектом src/main/java/resources/
+Ввести команду liquibase --changeLogFile=changelog.xml update , затем "s".
