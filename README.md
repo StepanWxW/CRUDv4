@@ -23,5 +23,6 @@ PostStatus(enum ACTIVE, DELETED)
 * В строке " flyway.user= " указать юзера
 * В строке " flyway.password= " указать пароль
 * Везде убрать значок " # "
-3. В командной строке перейти в папку с проектом src/main/java/resources/
-Ввести команду liquibase --changeLogFile=changelog.xml update , затем "s".
+3. В папке с проектом flyway-9.2.2\sql загрузить файл из папки resources "V1__create_tables.sql"
+4. В командной строке перейти в папку с проектом flyway-9.2.2\
+Ввести команду flyway migrate
